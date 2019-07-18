@@ -1,0 +1,353 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+
+namespace practic
+{
+    class Program
+    {
+        public string Surname;
+        public string Name;
+        public string Secondname;
+        public long Mob;
+        public string From;
+        public string Datebithday;
+        public string Org;
+        public string Prior;
+        public string Etc;
+
+        public Program(string Surname, string Name, string Secondname, long Mob, string From, string Datebithday,
+            string Org, string Prior, string Etc)
+        {
+            this.Surname = Surname;
+            this.Name = Name;
+            this.Secondname = Secondname;
+            this.Mob = Mob;
+            this.From = From;
+            this.Datebithday = Datebithday;
+            this.Org = Org;
+            this.Prior = Prior;
+            this.Etc = Etc;
+        }
+    }
+    class NoteBook
+    {
+        static int k = 0;
+        static int n = 0;
+        Dictionary<int, Program> note = new Dictionary<int, Program>();
+        static bool IsNumber(string stroka)
+        {
+            foreach (char c in stroka)
+                if (char.IsNumber(c))
+                {
+                    return true;
+                }
+            return false;
+        }
+        static void Main(string[] args)
+        {
+            string i = " ";
+            NoteBook note = new NoteBook();
+            while (i != "6")
+            {
+                Console.WriteLine("Введите число от 1 до 5 где:\n 1)Создать записку\n 2)редактировать записку\n 3)удалить запику\n " +
+                     "4)вывести определенную записку\n 5)просмотреть все записки\n 6)выход");
+                i = Console.ReadLine();
+                note.field(i);
+            }
+        }
+        void field(string i)
+        {
+            string Surname = "";
+            string Name = "";
+            string Secondname = "";
+            long Mob = 0;
+            string From = "";
+            string Datebithday = "";
+            string Org = "";
+            string Prior = "";
+            string Etc = "";
+            switch (i) {
+                case "1":
+                    while (Surname == "")
+                    {
+                        Console.WriteLine("Введите фамилию: ");
+                        Surname = Console.ReadLine();
+
+                        while (Surname.Contains(" "))
+                        {
+                            Surname = "";
+                            Console.WriteLine("Поле пустое!! введите заново");
+                        }
+                    }
+                    while (Name == "")
+                    {
+                        Console.WriteLine("Введите имя: ");
+                        Name = Console.ReadLine();
+                        while (Name.Contains(" "))
+                        {
+                            Name = "";
+                            Console.WriteLine("Поле пустое!! введите заново");
+                        }
+                    }
+                    Console.WriteLine("Введите отчество: ");
+                    Secondname = Console.ReadLine();
+                    while (Mob == 0)
+                    {
+                        Console.WriteLine("Введите номер телефона(только цифры): ");
+                        string stroka = Console.ReadLine();
+                        if (IsNumber(stroka))
+                        {
+                            Mob = Int64.Parse(stroka);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Вы ввели не цифры");
+                        }
+                    }
+                    while (From == "")
+                    {
+                        Console.WriteLine("Введите страну: ");
+                        From = Console.ReadLine();
+                        while (From.Contains(" "))
+                        {
+                            From = "";
+                            Console.WriteLine("Поле пустое!! введите заново");
+                        }
+                    }
+                    Console.WriteLine("Введите дату рождения: ");
+                    Datebithday = Console.ReadLine();
+                    Console.WriteLine("Введите организацию: ");
+                    Org = Console.ReadLine();
+                    Console.WriteLine("введите Должность: ");
+                    Prior = Console.ReadLine();
+                    Console.WriteLine("Введите дополнительную информацию: ");
+                    Etc = Console.ReadLine();
+
+                    note[k] = new Program(Surname, Name, Secondname, Mob, From, Datebithday, Org, Prior, Etc);
+                    k++;
+                    Console.Clear();
+                    break;
+                case "2":
+                    n = 0;
+                    Console.WriteLine("Все ваши записи: ");
+                    foreach (Program c in note.Values)
+                    {
+                        Console.WriteLine("Запись с Id-" + n + "и фамилеей пользователя - " + c.Surname);
+                        n++;
+                    }
+                    bool t = true;
+                    while (t)
+                    {
+                        Console.WriteLine("Введите id того, с кем связана запись: ");
+                        string stroka = Console.ReadLine();
+
+                        if (IsNumber(stroka))
+                        {
+                            int g = Int32.Parse(stroka);
+                            bool obg = true;
+                            while (obg)
+                            {
+                                string str = "";
+                                NoteBook st = new NoteBook();
+                                Console.WriteLine("Введите поле, которое хотите изменить. Имеющиеся поля: фамилия, имя, отчество, телефон, страна, дата рождения, организация, должность, другое или выход, чтобы завершить изменения записи. ");
+                                str = Console.ReadLine();
+                                str = str.ToLower();
+                                if (str == "фамилия")
+                                {
+                                    bool q = true;
+                                    while (q)
+                                    {
+                                        Console.WriteLine("Введите новую фамилию: ");
+                                        note.ElementAt(g).Value.Surname = Console.ReadLine();
+                                        if (note.ElementAt(g).Value.Surname.Contains(" "))
+                                        {
+                                            Console.WriteLine("Поле должно быть заполненно");
+                                        }
+                                        else
+                                        {
+                                            Console.WriteLine("Запись обновленна");
+                                            q = false;
+                                            break;
+                                        }
+                                    }
+                                }
+                                else if (str == "имя")
+                                {
+                                    bool l = true;
+                                    while (l)
+                                    {
+                                        Console.WriteLine("Введите новое имя: ");
+                                        note.ElementAt(g).Value.Name = Console.ReadLine();
+                                        if (note.ElementAt(g).Value.Name.Contains(" "))
+                                        {
+                                            Console.WriteLine("Поле должно быть заполненно");
+                                        }
+                                        else
+                                        {
+                                            Console.WriteLine("Запись обновленна");
+                                            l = false;
+                                            break;
+                                        }
+                                    }
+                                }
+                                else if (str == "отчество")
+                                {
+                                    Console.WriteLine("Введите новое  отчество: ");
+                                    note.ElementAt(g).Value.Secondname = Console.ReadLine();
+                                    Console.WriteLine("Запись обновленна");
+                                }
+                                else if (str == "телефон")
+                                {
+                                    bool y = true;
+                                    while (y)
+                                    {
+                                        Console.WriteLine("Введите новый номер телефона: ");
+                                        string s = Console.ReadLine();
+                                        if (IsNumber(s))
+                                        {
+                                            note.ElementAt(g).Value.Mob = Int64.Parse(s);
+                                            Console.WriteLine("Запись обновленна");
+                                            y = false;
+                                            break;
+
+                                        }
+                                        else
+                                        {
+                                            Console.WriteLine("Вы ввели не цифры");
+                                            Console.WriteLine("Запись не обновленна");
+                                        }
+
+                                    }
+
+
+                                }
+                                else if (str == "страна")
+                                {
+                                    bool p = true;
+                                    while (p)
+                                    {
+                                        Console.WriteLine("Введите новую страну: ");
+                                        note.ElementAt(g).Value.From = Console.ReadLine();
+                                        if (note.ElementAt(g).Value.Name.Contains(" "))
+                                        {
+                                            Console.WriteLine("Поле должно быть заполненно");
+                                        }
+                                        else
+                                        {
+                                            Console.WriteLine("Запись обновленна");
+                                            p = false;
+                                            break;
+                                        }
+                                    }
+                                }
+                                else if (str == "дата рождения")
+                                {
+                                    Console.WriteLine("Введите новую дату рождения: ");
+                                    note.ElementAt(g).Value.Datebithday = Console.ReadLine();
+                                    Console.WriteLine("Запись обновленна");
+                                }
+                                else if (str == "организация")
+                                {
+                                    Console.WriteLine("Введите новую организацию: ");
+                                    note.ElementAt(g).Value.Org = Console.ReadLine();
+                                    Console.WriteLine("Запись обновленна");
+                                }
+                                else if (str == "должность")
+                                {
+                                    Console.WriteLine("Введите новую должность: ");
+                                    note.ElementAt(g).Value.Prior = Console.ReadLine();
+                                    Console.WriteLine("Запись обновленна");
+                                }
+                                else if (str == "другое")
+                                {
+                                    Console.WriteLine("Введите новые данные: ");
+                                    note.ElementAt(g).Value.Etc = Console.ReadLine();
+                                    Console.WriteLine("Запись обновленна");
+                                }
+                                else if (str == "выход")
+                                {
+                                    obg = false;
+                                    break;
+                                }
+                                else { Console.WriteLine("такого поля нет"); }
+                                Console.Clear();
+                                t = false;
+                                break;
+                            }
+                        }
+                        else { Console.WriteLine("Вы ввели не цифры"); }
+
+                    }
+                    break;
+                case "3":
+                    n = 0;
+                    foreach (Program c in note.Values)
+                    {
+
+                        Console.WriteLine("Запись с Id-{0}, и фамилеей пользователя-{1}", n, c.Surname);
+                        n++;
+                    }
+                    bool r = true;
+                    while (r)
+                    {
+                        Console.WriteLine("Введите id того человека,запись связанную с которым хотите удалить: ");
+                        string stroka = Console.ReadLine();
+                        if (IsNumber(stroka))
+                        {
+                            int g = Int32.Parse(stroka);
+                            if (note.Remove(g))
+                            {
+                                Console.WriteLine("Запись удалена");
+                            }
+                            r = false;
+                            break;
+                        }
+                        else { Console.WriteLine("Вы ввели не цифры"); }
+                    }
+                    break;
+                case "4":
+                    
+                    n = 0;
+                    foreach (Program c in note.Values)
+                    {
+                        Console.WriteLine("id-{0}, Фамилия-{1}, Имя-{2}", n, c.Surname, c.Name);
+                        n++;
+                    }
+                    bool u = true;
+                    while (u)
+                    {
+                        Console.WriteLine("Введите id того, с кем связана запись: ");
+                        string stroka = Console.ReadLine();
+                        if (IsNumber(stroka))
+                        {
+                            int g = Int32.Parse(stroka);
+                            Console.WriteLine("Фамилия-{0}, Имя-{1},  Отчество-{2},  Телефон-{3},  Страна-{4}\n Дата рождения-{5},  Организация-{6},  Должность-{7},  Другое-{8}", note.ElementAt(g).Value.Surname, note.ElementAt(g).Value.Name, note.ElementAt(g).Value.Secondname, note.ElementAt(g).Value.Mob, note.ElementAt(g).Value.From, note.ElementAt(g).Value.Datebithday, note.ElementAt(g).Value.Org, note.ElementAt(g).Value.Prior, note.ElementAt(g).Value.Etc);
+                            u = false;
+                            break;
+                        }
+                        else { Console.WriteLine("Вы ввели не цифры"); }
+
+                    }
+                    break; 
+                case "5":
+                        if (note != null)
+                        {
+                            n = 0;
+                            Console.WriteLine("вот все ваши записи:");
+                            foreach (Program c in note.Values)
+                            {
+                                Console.WriteLine("Записc с ID-{0}, фамилеей пользователя-{1}, именем-{2} и телефоном-{3}", n, c.Surname, c.Name, c.Mob);
+                                n++;
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Контактов нет");
+                        }
+                        break;
+            }
+        }
+    }
+}
